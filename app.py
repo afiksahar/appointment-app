@@ -6,11 +6,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///clients.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+# טבלאות
 class Client(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     phone = db.Column(db.String(20), nullable=False)
-    treatment = db.Column(db.String(100), nullable=False)
 
 class Appointment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -19,27 +19,32 @@ class Appointment(db.Model):
     time = db.Column(db.String(20), nullable=False)
     treatment_type = db.Column(db.String(100), nullable=False)
 
+    client = db.relationship('Client', backref=db.backref('appointments', lazy=True))
+
+# דף הבית
 @app.route('/')
 def home():
     return render_template('index.html')
 
+# הוספת לקוחה
 @app.route('/add-client', methods=['GET', 'POST'])
 def add_client():
     if request.method == 'POST':
         name = request.form['name']
         phone = request.form['phone']
-        treatment = request.form['treatment']
-        client = Client(name=name, phone=phone, treatment=treatment)
+        client = Client(name=name, phone=phone)
         db.session.add(client)
         db.session.commit()
-        return "🎉 לקוחה נוספה בהצלחה"
+        return redirect('/clients')
     return render_template('add_client.html')
 
+# צפייה בכל הלקוחות
 @app.route('/clients')
 def view_clients():
     clients = Client.query.all()
     return render_template('clients.html', clients=clients)
 
+# קביעת תור
 @app.route('/add-appointment', methods=['GET', 'POST'])
 def add_appointment():
     clients = Client.query.all()
@@ -48,36 +53,43 @@ def add_appointment():
         date = request.form['date']
         time = request.form['time']
         treatment_type = request.form['treatment_type']
-        appointment = Appointment(client_id=client_id, date=date, time=time, treatment_type=treatment_type)
+        appointment = Appointment(
+            client_id=client_id,
+            date=date,
+            time=time,
+            treatment_type=treatment_type
+        )
         db.session.add(appointment)
         db.session.commit()
-        return "📅 התור נשמר בהצלחה"
+        return render_template('add_appointment.html', clients=clients, client_id=client_id)
     return render_template('add_appointment.html', clients=clients)
 
+# שליחת WhatsApp
 @app.route('/send-whatsapp/<int:client_id>')
 def send_whatsapp(client_id):
     client = Client.query.get_or_404(client_id)
-    phone = client.phone
-    name = client.name
-    message = f"היי {name}, תורך נקבע בהצלחה!"
-    return redirect(f"https://wa.me/972{phone}?text={message}")
+    message = f"היי {client.name}, תורך נקבע בהצלחה!"
+    return redirect(f"https://wa.me/972{client.phone}?text={message}")
 
+# יומן תורים
 @app.route('/calendar')
 def calendar_view():
     return render_template('calendar.html')
 
+# שליפת תורים כ־JSON ליומן
 @app.route('/appointments-json')
 def appointments_json():
     appointments = Appointment.query.all()
-    events = []
-    for appt in appointments:
-        client = Client.query.get(appt.client_id)
-        events.append({
-            'title': f"{client.name} - {appt.treatment_type}",
-            'start': f"{appt.date}T{appt.time}"
+    data = []
+    for a in appointments:
+        client = Client.query.get(a.client_id)
+        data.append({
+            "title": f"{client.name} - {a.treatment_type}",
+            "start": f"{a.date}T{a.time}"
         })
-    return jsonify(events)
+    return jsonify(data)
 
+# יצירת מסד בעת הרצה
 with app.app_context():
     db.create_all()
 
