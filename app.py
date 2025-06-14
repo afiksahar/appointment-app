@@ -11,15 +11,14 @@ class Client(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     phone = db.Column(db.String(20), nullable=False)
-    treatment = db.Column(db.String(100), nullable=False)
+    appointments = db.relationship('Appointment', backref='client', lazy=True)
 
 class Appointment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     client_id = db.Column(db.Integer, db.ForeignKey('client.id'), nullable=False)
     date = db.Column(db.String(50), nullable=False)
     time = db.Column(db.String(50), nullable=False)
-
-    client = db.relationship('Client', backref=db.backref('appointments', lazy=True))
+    treatment = db.Column(db.String(100), nullable=False)
 
 @app.route('/')
 def index():
@@ -30,17 +29,11 @@ def add_client():
     if request.method == 'POST':
         name = request.form['name']
         phone = request.form['phone']
-        treatment = request.form['treatment']
-        new_client = Client(name=name, phone=phone, treatment=treatment)
+        new_client = Client(name=name, phone=phone)
         db.session.add(new_client)
         db.session.commit()
         return redirect('/clients')
     return render_template('add_client.html')
-
-@app.route('/clients')
-def clients():
-    all_clients = Client.query.all()
-    return render_template('clients.html', clients=all_clients)
 
 @app.route('/add-appointment', methods=['GET', 'POST'])
 def add_appointment():
@@ -49,20 +42,25 @@ def add_appointment():
         client_id = request.form['client_id']
         date = request.form['date']
         time = request.form['time']
-        new_appointment = Appointment(client_id=client_id, date=date, time=time)
-        db.session.add(new_appointment)
+        treatment = request.form['treatment']
+        new_appt = Appointment(client_id=client_id, date=date, time=time, treatment=treatment)
+        db.session.add(new_appt)
         db.session.commit()
         return redirect('/')
     return render_template('add_appointment.html', clients=clients)
 
+@app.route('/clients')
+def clients():
+    all_clients = Client.query.all()
+    return render_template('clients.html', clients=all_clients)
+
 @app.route('/appointments-json')
 def appointments_json():
-    appointments = Appointment.query.all()
+    appts = Appointment.query.all()
     data = []
-    for a in appointments:
-        client = Client.query.get(a.client_id)
+    for a in appts:
         data.append({
-            "title": f"{client.name} - {client.treatment}",
+            "title": f"{a.client.name} - {a.treatment}",
             "start": f"{a.date}T{a.time}"
         })
     return jsonify(data)
