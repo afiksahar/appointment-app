@@ -18,7 +18,7 @@ class Appointment(db.Model):
     time = db.Column(db.String(20), nullable=False)
     treatment_type = db.Column(db.String(100), nullable=False)
 
-    client = db.relationship('Client', backref=db.backref('appointments', lazy=True))
+    client = db.relationship('Client', backref=db.backref('appointments', cascade="all, delete", lazy=True))
 
 @app.route('/')
 def home():
@@ -40,6 +40,13 @@ def view_clients():
     clients = Client.query.all()
     return render_template('clients.html', clients=clients)
 
+@app.route('/delete-client/<int:client_id>', methods=['POST'])
+def delete_client(client_id):
+    client = Client.query.get_or_404(client_id)
+    db.session.delete(client)
+    db.session.commit()
+    return redirect('/clients')
+
 @app.route('/add-appointment', methods=['GET', 'POST'])
 def add_appointment():
     clients = Client.query.all()
@@ -48,23 +55,16 @@ def add_appointment():
         date = request.form['date']
         time = request.form['time']
         treatment_type = request.form['treatment_type']
-
-        appointment = Appointment(
-            client_id=client_id,
-            date=date,
-            time=time,
-            treatment_type=treatment_type
-        )
+        appointment = Appointment(client_id=client_id, date=date, time=time, treatment_type=treatment_type)
         db.session.add(appointment)
         db.session.commit()
 
-        # שליחת WhatsApp אוטומטית
+        # שליחת וואטסאפ מיידית
         client = Client.query.get(client_id)
-        phone = client.phone.replace("-", "").replace(" ", "").lstrip("0")  # הסרת קידומת מקומית
-        message = f"היי {client.name}, תורך נקבע ל־{date} בשעה {time} לטיפול {treatment_type}. נתראה! 😊"
-        whatsapp_url = f"https://wa.me/972{phone}?text={message}"
-
-        return redirect(whatsapp_url)
+        name = client.name
+        phone = client.phone
+        message = f"היי {name}, תורך נקבע ל-{date} בשעה {time} לטיפול {treatment_type}."
+        return redirect(f"https://wa.me/972{phone}?text={message}")
 
     return render_template('add_appointment.html', clients=clients)
 

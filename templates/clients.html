@@ -31,29 +31,48 @@
       text-decoration: underline;
     }
 
-    .container {
-      max-width: 800px;
-      margin: auto;
-      background: white;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
     h1 {
       text-align: center;
       color: #880e4f;
+      margin-top: 30px;
     }
 
-    ul {
-      list-style-type: none;
-      padding: 0;
+    table {
+      width: 90%;
+      margin: 30px auto;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      overflow: hidden;
     }
 
-    li {
-      margin: 15px 0;
-      padding: 10px;
+    th, td {
+      padding: 15px;
+      text-align: center;
       border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background-color: #f8bbd0;
+      color: #4a0033;
+    }
+
+    tr:hover {
+      background-color: #fce4ec;
+    }
+
+    .delete-btn {
+      background-color: #ef5350;
+      color: white;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background-color: #d32f2f;
     }
   </style>
 </head>
@@ -65,13 +84,25 @@
     <a href="/calendar">📆 יומן</a>
   </nav>
 
-  <div class="container">
-    <h1>📋 רשימת לקוחות</h1>
-    <ul>
-      {% for client in clients %}
-        <li>{{ client.name }} - {{ client.phone }}</li>
-      {% endfor %}
-    </ul>
-  </div>
+  <h1>📋 רשימת לקוחות</h1>
+
+  <table>
+    <tr>
+      <th>שם</th>
+      <th>טלפון</th>
+      <th>מחיקה</th>
+    </tr>
+    {% for client in clients %}
+    <tr>
+      <td>{{ client.name }}</td>
+      <td>{{ client.phone }}</td>
+      <td>
+        <form action="/delete-client/{{ client.id }}" method="POST" onsubmit="return confirm('למחוק את {{ client.name }}?');">
+          <button class="delete-btn" type="submit">🗑️ מחק</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
 </body>
 </html>
