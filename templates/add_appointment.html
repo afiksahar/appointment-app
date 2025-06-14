@@ -1,42 +1,26 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>קביעת תור</title>
-  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <nav>
-    <a href="/">🏠 דף הבית</a>
-    <a href="/add-client">➕ הוספת לקוחה</a>
-    <a href="/add-appointment">📅 קביעת תור</a>
-    <a href="/clients">📋 רשימת לקוחות</a>
-    <a href="/calendar">📆 יומן</a>
-  </nav>
+  <h2>📅 קביעת תור חדש</h2>
+  <form method="POST">
+    <label>בחרי לקוחה:</label><br>
+    <select name="client_id" required>
+      {% for client in clients %}
+        <option value="{{ client.id }}">{{ client.name }} - {{ client.phone }}</option>
+      {% endfor %}
+    </select><br><br>
 
-  <div class="form-container">
-    <h1>קביעת תור חדש</h1>
-    <form method="POST">
-      <label for="client_id">בחרי לקוחה:</label>
-      <select id="client_id" name="client_id" required>
-        {% for client in clients %}
-          <option value="{{ client.id }}">{{ client.name }} - {{ client.phone }}</option>
-        {% endfor %}
-      </select>
+    <label>תאריך:</label><br>
+    <input type="date" name="date" required><br><br>
 
-      <label for="treatment">סוג טיפול:</label>
-      <input type="text" id="treatment" name="treatment" required>
+    <label>שעה:</label><br>
+    <input type="time" name="time" required><br><br>
 
-      <label for="date">תאריך:</label>
-      <input type="date" id="date" name="date" required>
-
-      <label for="time">שעה:</label>
-      <input type="time" id="time" name="time" required>
-
-      <button type="submit">שמור תור</button>
-    </form>
-  </div>
+    <button type="submit">✅ קבעי תור</button>
+  </form>
 </body>
 </html>

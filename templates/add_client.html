@@ -1,32 +1,22 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>הוספת לקוחה</title>
-  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <nav>
-    <a href="/">🏠 דף הבית</a>
-    <a href="/add-client">➕ הוספת לקוחה</a>
-    <a href="/add-appointment">📅 קביעת תור</a>
-    <a href="/clients">📋 רשימת לקוחות</a>
-    <a href="/calendar">📆 יומן</a>
-  </nav>
+  <h2>📝 טופס הוספת לקוחה</h2>
+  <form method="POST">
+    <label>שם לקוחה:</label><br>
+    <input type="text" name="name" required><br><br>
 
-  <div class="form-container">
-    <h1>הוספת לקוחה חדשה</h1>
-    <form method="POST">
-      <label for="name">שם הלקוחה:</label>
-      <input type="text" id="name" name="name" required>
+    <label>מספר טלפון:</label><br>
+    <input type="text" name="phone" required><br><br>
 
-      <label for="phone">מספר טלפון:</label>
-      <input type="text" id="phone" name="phone" required>
+    <label>סוג טיפול:</label><br>
+    <input type="text" name="treatment" required><br><br>
 
-      <button type="submit">הוסף</button>
-    </form>
-  </div>
+    <button type="submit">💾 שמור לקוחה</button>
+  </form>
 </body>
 </html>

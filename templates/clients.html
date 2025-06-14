@@ -1,42 +1,17 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>רשימת לקוחות</title>
-  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <nav>
-    <a href="/">🏠 דף הבית</a>
-    <a href="/add-client">➕ הוספת לקוחה</a>
-    <a href="/add-appointment">📅 קביעת תור</a>
-    <a href="/clients">📋 רשימת לקוחות</a>
-    <a href="/calendar">📆 יומן</a>
-  </nav>
-
-  <div class="form-container">
-    <h1>רשימת לקוחות ותורים</h1>
-
+  <h1>📋 רשימת לקוחות</h1>
+  <ul>
     {% for client in clients %}
-      <div class="client-card">
-        <h2>{{ client.name }}</h2>
-        <p>📞 {{ client.phone }}</p>
-
-        {% if client.appointments %}
-          <ul>
-            {% for appt in client.appointments %}
-              <li>
-                🗓 {{ appt.date }} בשעה {{ appt.time }} — טיפול: {{ appt.treatment }}
-              </li>
-            {% endfor %}
-          </ul>
-        {% else %}
-          <p>אין תורים ללקוחה זו.</p>
-        {% endif %}
-      </div>
+      <li>{{ client.name }} - {{ client.phone }} | טיפול: {{ client.treatment }}</li>
+    {% else %}
+      <li>אין לקוחות</li>
     {% endfor %}
-  </div>
+  </ul>
 </body>
 </html>

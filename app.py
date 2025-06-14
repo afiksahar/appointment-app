@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-import os
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///appointments.db'
@@ -12,13 +11,13 @@ class Client(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     phone = db.Column(db.String(20), nullable=False)
+    treatment = db.Column(db.String(100), nullable=False)
 
 class Appointment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     client_id = db.Column(db.Integer, db.ForeignKey('client.id'), nullable=False)
     date = db.Column(db.String(50), nullable=False)
     time = db.Column(db.String(50), nullable=False)
-    treatment = db.Column(db.String(100), nullable=False)
 
     client = db.relationship('Client', backref=db.backref('appointments', lazy=True))
 
@@ -31,7 +30,8 @@ def add_client():
     if request.method == 'POST':
         name = request.form['name']
         phone = request.form['phone']
-        new_client = Client(name=name, phone=phone)
+        treatment = request.form['treatment']
+        new_client = Client(name=name, phone=phone, treatment=treatment)
         db.session.add(new_client)
         db.session.commit()
         return redirect('/clients')
@@ -49,8 +49,7 @@ def add_appointment():
         client_id = request.form['client_id']
         date = request.form['date']
         time = request.form['time']
-        treatment = request.form['treatment']
-        new_appointment = Appointment(client_id=client_id, date=date, time=time, treatment=treatment)
+        new_appointment = Appointment(client_id=client_id, date=date, time=time)
         db.session.add(new_appointment)
         db.session.commit()
         return redirect('/')
@@ -63,7 +62,7 @@ def appointments_json():
     for a in appointments:
         client = Client.query.get(a.client_id)
         data.append({
-            "title": f"{client.name} - {a.treatment}",
+            "title": f"{client.name} - {client.treatment}",
             "start": f"{a.date}T{a.time}"
         })
     return jsonify(data)
