@@ -2,25 +2,55 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>לוח תורים</title>
+  <title>יומן תורים</title>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
   <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css' rel='stylesheet' />
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     body {
+      margin: 0;
       font-family: 'Assistant', sans-serif;
+      background: url("/static/images/nude-colors-nail-polish-spilled-over-white-backgro-2025-02-24-17-59-44-utc.jpg") center center no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      position: relative;
     }
-    #calendar {
-      max-width: 1000px;
-      margin: auto;
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(255, 255, 255, 0.75);
+      z-index: 0;
+    }
+
+    .calendar-container {
+      position: relative;
       z-index: 1;
+      max-width: 1000px;
+      margin: 80px auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #880e4f;
+      margin-bottom: 30px;
+    }
+
+    #calendar {
+      direction: ltr;
     }
   </style>
 </head>
 <body>
-  <h1>יומן תורים</h1>
-  <div id='calendar'></div>
+  <div class="calendar-container">
+    <h1>📆 יומן תורים</h1>
+    <div id='calendar'></div>
+  </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
