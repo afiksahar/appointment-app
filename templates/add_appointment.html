@@ -1,29 +1,30 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <title>קביעת תור</title>
+  <meta charset="UTF-8">
+  <title>קביעת תור חדש</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>קביעת תור ללקוחה</h1>
-    <form method="POST">
-        <label>בחרי לקוחה:</label><br>
-        <select name="client_id" required>
-            {% for client in clients %}
-                <option value="{{ client.id }}">{{ client.name }} ({{ client.phone }})</option>
-            {% endfor %}
-        </select><br><br>
+  <h1>קביעת תור חדש</h1>
+  <form method="POST">
+    <label for="client_id">בחרי לקוחה:</label>
+    <select name="client_id" id="client_id" required>
+      {% for client in clients %}
+        <option value="{{ client.id }}">{{ client.name }}</option>
+      {% endfor %}
+    </select>
 
-        <label>תאריך:</label><br>
-        <input type="date" name="date" required><br><br>
+    <label for="date">תאריך:</label>
+    <input type="date" id="date" name="date" required>
 
-        <label>שעה:</label><br>
-        <input type="time" name="time" required><br><br>
+    <label for="time">שעה:</label>
+    <input type="time" id="time" name="time" required>
 
-        <label>סוג טיפול:</label><br>
-        <input type="text" name="treatment_type" required><br><br>
+    <label for="treatment_type">סוג טיפול:</label>
+    <input type="text" id="treatment_type" name="treatment_type" required>
 
-        <button type="submit">שמור תור</button>
-    </form>
+    <button type="submit">📅 קביעת תור</button>
+  </form>
 </body>
 </html>

@@ -1,22 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="he" dir="rtl">
 <head>
-    <meta charset="utf-8">
-    <title>הוספת לקוחה</title>
+  <meta charset="UTF-8">
+  <title>הוספת לקוחה חדשה</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>הוספת לקוחה</h1>
-    <form method="POST">
-        <label>שם מלא:</label><br>
-        <input type="text" name="name" required><br><br>
+  <h1>הוספת לקוחה חדשה</h1>
+  <form method="POST">
+    <label for="name">שם מלא:</label>
+    <input type="text" id="name" name="name" required>
 
-        <label>טלפון:</label><br>
-        <input type="text" name="phone" required><br><br>
+    <label for="phone">טלפון:</label>
+    <input type="text" id="phone" name="phone" required>
 
-        <label>סוג טיפול:</label><br>
-        <input type="text" name="treatment" required><br><br>
+    <label for="treatment">סוג טיפול:</label>
+    <input type="text" id="treatment" name="treatment" required>
 
-        <button type="submit">שמור</button>
-    </form>
+    <button type="submit">💾 שמירה</button>
+  </form>
 </body>
 </html>

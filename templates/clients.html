@@ -1,28 +1,26 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <title>רשימת לקוחות</title>
+  <meta charset="UTF-8">
+  <title>רשימת לקוחות</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>לקוחות רשומות</h1>
-    <table border="1" cellpadding="8">
-        <thead>
-            <tr>
-                <th>שם</th>
-                <th>טלפון</th>
-                <th>סוג טיפול</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for client in clients %}
-            <tr>
-                <td>{{ client.name }}</td>
-                <td>{{ client.phone }}</td>
-                <td>{{ client.treatment }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+  <h1>📋 רשימת לקוחות</h1>
+
+  {% if clients %}
+    <ul>
+      {% for client in clients %}
+        <li>
+          <strong>{{ client.name }}</strong> |
+          טלפון: {{ client.phone }} |
+          טיפול: {{ client.treatment }}
+          <a href="/send-whatsapp/{{ client.id }}"><button>📱 שלח ב־WhatsApp</button></a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>לא נמצאו לקוחות במערכת.</p>
+  {% endif %}
 </body>
 </html>
