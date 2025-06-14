@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <title>קביעת תור</title>
+</head>
+<body>
+    <h1>קביעת תור ללקוחה</h1>
+    <form method="POST">
+        <label>בחרי לקוחה:</label><br>
+        <select name="client_id" required>
+            {% for client in clients %}
+                <option value="{{ client.id }}">{{ client.name }} ({{ client.phone }})</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label>תאריך:</label><br>
+        <input type="date" name="date" required><br><br>
+
+        <label>שעה:</label><br>
+        <input type="time" name="time" required><br><br>
+
+        <label>סוג טיפול:</label><br>
+        <input type="text" name="treatment_type" required><br><br>
+
+        <button type="submit">שמור תור</button>
+    </form>
+</body>
+</html>
