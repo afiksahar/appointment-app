@@ -12,7 +12,6 @@
       margin: 0;
       padding: 20px;
     }
-
     nav {
       background-color: #f8bbd0;
       padding: 10px 20px;
@@ -20,17 +19,14 @@
       justify-content: center;
       gap: 20px;
     }
-
     nav a {
       color: #4a0033;
       text-decoration: none;
       font-weight: bold;
     }
-
     nav a:hover {
       text-decoration: underline;
     }
-
     .container {
       max-width: 500px;
       margin: auto;
@@ -39,11 +35,9 @@
       border-radius: 15px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-
     label {
       font-weight: bold;
     }
-
     input, select {
       width: 100%;
       padding: 10px;
@@ -51,7 +45,6 @@
       border-radius: 10px;
       border: 1px solid #ccc;
     }
-
     button {
       width: 100%;
       background-color: #f48fb1;
@@ -74,21 +67,21 @@
   <div class="container">
     <h1>📅 קביעת תור</h1>
     <form method="POST">
-      <label>בחרי לקוחה:</label>
-      <select name="client_id" required>
+      <label for="client_id">בחרי לקוחה:</label>
+      <select name="client_id" id="client_id" required>
         {% for client in clients %}
-          <option value="{{ client.id }}">{{ client.name }}</option>
+        <option value="{{ client.id }}">{{ client.name }} - {{ client.phone }}</option>
         {% endfor %}
       </select>
 
-      <label>תאריך:</label>
-      <input type="date" name="date" required>
+      <label for="date">תאריך:</label>
+      <input type="date" name="date" id="date" required>
 
-      <label>שעה:</label>
-      <input type="time" name="time" required>
+      <label for="time">שעה:</label>
+      <input type="time" name="time" id="time" required>
 
-      <label>סוג טיפול:</label>
-      <input type="text" name="treatment_type" required>
+      <label for="treatment_type">סוג טיפול:</label>
+      <input type="text" name="treatment_type" id="treatment_type" required>
 
       <button type="submit">שמור תור</button>
     </form>
