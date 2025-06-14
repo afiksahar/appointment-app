@@ -2,68 +2,68 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>ניהול לקוחות ותורים</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <title>ניהול תורים</title>
   <style>
     body {
-      background: url('https://images.unsplash.com/photo-1607082349566-187342175e2c?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      font-family: Arial, sans-serif;
+      background-image: url("/static/images/nude-colors-nail-polish-spilled-over-white-backgro-2025-02-24-17-59-44-utc.jpg");
       background-size: cover;
-      position: relative;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      padding: 20px;
+      color: #333;
     }
 
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0; right: 0; bottom: 0; left: 0;
-      background-color: rgba(255, 255, 255, 0.7); /* שכבת שקיפות */
-      z-index: 0;
+    .container {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 40px;
+      max-width: 600px;
+      margin: auto;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     }
 
-    h1, ul {
-      position: relative;
-      z-index: 1;
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
     }
 
     ul {
-      list-style-type: none;
+      list-style: none;
       padding: 0;
-      margin-top: 40px;
+      text-align: center;
     }
 
     li {
       margin: 20px 0;
     }
 
-    button {
-      font-size: 1.2em;
-      padding: 12px 25px;
-      cursor: pointer;
-      border-radius: 30px;
-      border: none;
-      background-color: #f48fb1;
+    a button {
+      background-color: #efb7b7;
       color: white;
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      border: none;
+      padding: 15px 30px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
-    button:hover {
-      background-color: #ec407a;
-      transform: scale(1.05);
-    }
-
-    h1 {
-      margin-top: 80px;
-      font-size: 2.5em;
-      color: #880e4f;
+    a button:hover {
+      background-color: #d49ea3;
     }
   </style>
 </head>
 <body>
-  <h1>ברוכה הבאה למערכת ניהול תורים</h1>
-  <ul>
-    <li><a href="/add-client"><button>➕ הוספת לקוחה</button></a></li>
-    <li><a href="/add-appointment"><button>📅 קביעת תור</button></a></li>
-    <li><a href="/clients"><button>📋 רשימת לקוחות</button></a></li>
-    <li><a href="/calendar"><button>📆 צפייה ביומן</button></a></li>
-  </ul>
+  <div class="container">
+    <h1>ברוך הבא למערכת תורים</h1>
+    <ul>
+      <li><a href="/add-client"><button>➕ הוספת לקוחה חדשה</button></a></li>
+      <li><a href="/add-appointment"><button>📅 קביעת תור</button></a></li>
+      <li><a href="/clients"><button>📋 רשימת לקוחות</button></a></li>
+      <li><a href="/calendar"><button>📆 יומן תורים</button></a></li>
+    </ul>
+  </div>
 </body>
 </html>
