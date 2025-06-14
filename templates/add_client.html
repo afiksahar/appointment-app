@@ -2,32 +2,37 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>הוספת לקוחה חדשה</title>
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <style>
     body {
       margin: 0;
       font-family: 'Assistant', sans-serif;
-      background: url("/static/images/nude-colors-nail-polish-spilled-over-white-backgro-2025-02-24-17-59-44-utc.jpg") center center no-repeat;
-      background-size: cover;
-      background-attachment: fixed;
-      position: relative;
+      background-color: #fce4ec;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(255, 255, 255, 0.75);
-      z-index: 0;
+    nav {
+      background-color: #f8bbd0;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    nav a {
+      color: #4a0033;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
     }
 
     .container {
-      position: relative;
-      z-index: 1;
       max-width: 500px;
-      margin: 80px auto;
+      margin: 40px auto;
       background-color: white;
       padding: 30px;
       border-radius: 15px;
@@ -70,9 +75,38 @@
     button:hover {
       background-color: #ec407a;
     }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px;
+        padding: 20px;
+        width: 90%;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      input, button {
+        font-size: 14px;
+        padding: 10px;
+      }
+
+      nav {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
   </style>
 </head>
 <body>
+  <nav>
+    <a href="/add-client">➕ הוספת לקוחה</a>
+    <a href="/add-appointment">📅 קביעת תור</a>
+    <a href="/clients">📋 רשימת לקוחות</a>
+    <a href="/calendar">📆 יומן</a>
+  </nav>
+
   <div class="container">
     <h1>➕ הוספת לקוחה חדשה</h1>
     <form method="POST">

@@ -9,25 +9,30 @@
     body {
       margin: 0;
       font-family: 'Assistant', sans-serif;
-      background: url("/static/images/nude-colors-nail-polish-spilled-over-white-backgro-2025-02-24-17-59-44-utc.jpg") center center no-repeat;
-      background-size: cover;
-      background-attachment: fixed;
-      position: relative;
+      background-color: #fce4ec;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(255, 255, 255, 0.75);
-      z-index: 0;
+    nav {
+      background-color: #f8bbd0;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    nav a {
+      color: #4a0033;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
     }
 
     .container {
-      position: relative;
-      z-index: 1;
       max-width: 800px;
-      margin: 80px auto;
+      margin: 40px auto;
       background-color: white;
       padding: 30px;
       border-radius: 15px;
@@ -43,22 +48,17 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 16px;
     }
 
     th, td {
       padding: 12px;
-      border-bottom: 1px solid #ddd;
-      text-align: right;
+      border: 1px solid #ddd;
+      text-align: center;
     }
 
     th {
       background-color: #f8bbd0;
       color: #4a0033;
-    }
-
-    tr:hover {
-      background-color: #f1f1f1;
     }
 
     @media (max-width: 600px) {
@@ -68,40 +68,40 @@
         width: 95%;
       }
 
-      h1 {
-        font-size: 22px;
-      }
-
-      table {
+      table, th, td {
         font-size: 14px;
       }
 
-      th, td {
-        padding: 8px;
+      nav {
+        flex-direction: column;
+        align-items: center;
       }
     }
   </style>
 </head>
 <body>
+  <nav>
+    <a href="/add-client">➕ הוספת לקוחה</a>
+    <a href="/add-appointment">📅 קביעת תור</a>
+    <a href="/clients">📋 רשימת לקוחות</a>
+    <a href="/calendar">📆 יומן</a>
+  </nav>
+
   <div class="container">
     <h1>📋 רשימת לקוחות</h1>
     <table>
-      <thead>
-        <tr>
-          <th>שם</th>
-          <th>טלפון</th>
-          <th>סוג טיפול</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for client in clients %}
-        <tr>
-          <td>{{ client.name }}</td>
-          <td>{{ client.phone }}</td>
-          <td>{{ client.treatment }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
+      <tr>
+        <th>שם</th>
+        <th>טלפון</th>
+        <th>סוג טיפול</th>
+      </tr>
+      {% for client in clients %}
+      <tr>
+        <td>{{ client.name }}</td>
+        <td>{{ client.phone }}</td>
+        <td>{{ client.treatment }}</td>
+      </tr>
+      {% endfor %}
     </table>
   </div>
 </body>
