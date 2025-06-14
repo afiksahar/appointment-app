@@ -1,121 +1,33 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>קביעת תור חדש</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>קביעת תור</title>
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Assistant', sans-serif;
-      background-color: #fce4ec;
-    }
-
-    nav {
-      background-color: #f8bbd0;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
-
-    nav a {
-      color: #4a0033;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    nav a:hover {
-      text-decoration: underline;
-    }
-
-    .container {
-      max-width: 500px;
-      margin: 40px auto;
-      background-color: white;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    h1 {
-      text-align: center;
-      color: #880e4f;
-      margin-bottom: 30px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      background-color: #f48fb1;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #ec407a;
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        margin: 20px;
-        padding: 20px;
-        width: 90%;
-      }
-
-      h1 {
-        font-size: 22px;
-      }
-
-      input, select, button {
-        font-size: 14px;
-        padding: 10px;
-      }
-
-      nav {
-        flex-direction: column;
-        align-items: center;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
   <nav>
+    <a href="/">🏠 דף הבית</a>
     <a href="/add-client">➕ הוספת לקוחה</a>
     <a href="/add-appointment">📅 קביעת תור</a>
     <a href="/clients">📋 רשימת לקוחות</a>
     <a href="/calendar">📆 יומן</a>
   </nav>
 
-  <div class="container">
-    <h1>📅 קביעת תור חדש</h1>
+  <div class="form-container">
+    <h1>קביעת תור חדש</h1>
     <form method="POST">
       <label for="client_id">בחרי לקוחה:</label>
       <select id="client_id" name="client_id" required>
         {% for client in clients %}
-        <option value="{{ client.id }}">{{ client.name }} - {{ client.treatment }}</option>
+          <option value="{{ client.id }}">{{ client.name }} - {{ client.phone }}</option>
         {% endfor %}
       </select>
+
+      <label for="treatment">סוג טיפול:</label>
+      <input type="text" id="treatment" name="treatment" required>
 
       <label for="date">תאריך:</label>
       <input type="date" id="date" name="date" required>
@@ -123,7 +35,7 @@
       <label for="time">שעה:</label>
       <input type="time" id="time" name="time" required>
 
-      <button type="submit">📩 קביעת תור ושליחת WhatsApp</button>
+      <button type="submit">שמור תור</button>
     </form>
   </div>
 </body>
