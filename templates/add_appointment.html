@@ -2,9 +2,9 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>קביעת תור חדש</title>
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <style>
     body {
       margin: 0;
@@ -69,6 +69,23 @@
 
     button:hover {
       background-color: #ec407a;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px;
+        padding: 20px;
+        width: 90%;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      input, select, button {
+        font-size: 14px;
+        padding: 10px;
+      }
     }
   </style>
 </head>
