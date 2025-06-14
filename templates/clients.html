@@ -3,24 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <title>רשימת לקוחות</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Assistant', sans-serif;
+      background: url("/static/images/nude-colors-nail-polish-spilled-over-white-backgro-2025-02-24-17-59-44-utc.jpg") center center no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(255, 255, 255, 0.75);
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 80px auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #880e4f;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 16px;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: right;
+    }
+
+    th {
+      background-color: #f8bbd0;
+      color: #4a0033;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
 </head>
 <body>
-  <h1>📋 רשימת לקוחות</h1>
-
-  {% if clients %}
-    <ul>
-      {% for client in clients %}
-        <li>
-          <strong>{{ client.name }}</strong> |
-          טלפון: {{ client.phone }} |
-          טיפול: {{ client.treatment }}
-          <a href="/send-whatsapp/{{ client.id }}"><button>📱 שלח ב־WhatsApp</button></a>
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>לא נמצאו לקוחות במערכת.</p>
-  {% endif %}
+  <div class="container">
+    <h1>📋 רשימת לקוחות</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>שם</th>
+          <th>טלפון</th>
+          <th>סוג טיפול</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for client in clients %}
+        <tr>
+          <td>{{ client.name }}</td>
+          <td>{{ client.phone }}</td>
+          <td>{{ client.treatment }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </body>
 </html>

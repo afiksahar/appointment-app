@@ -5,86 +5,21 @@
   <title>לוח תורים</title>
   <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css' rel='stylesheet' />
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     body {
-      background: url('https://images.unsplash.com/photo-1607082349566-187342175e2c?auto=format&fit=crop&w=1950&q=80') center center no-repeat;
-      background-size: cover;
-      position: relative;
-      margin: 0;
-      min-height: 100vh;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Assistant', sans-serif;
     }
-
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0; right: 0; bottom: 0; left: 0;
-      background-color: rgba(255, 255, 255, 0.7);
-      z-index: 0;
-    }
-
-    h1, ul, #calendar {
-      position: relative;
-      z-index: 1;
-    }
-
-    h1 {
-      text-align: center;
-      margin-top: 40px;
-      font-size: 2.2em;
-      color: #880e4f;
-    }
-
     #calendar {
       max-width: 1000px;
-      margin: 40px auto;
-      background-color: white;
-      border-radius: 15px;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    ul {
-      list-style-type: none;
-      padding: 0;
-      text-align: center;
-      margin-top: 30px;
-    }
-
-    li {
-      display: inline-block;
-      margin: 0 10px;
-    }
-
-    button {
-      font-size: 1em;
-      padding: 10px 20px;
-      border-radius: 30px;
-      border: none;
-      background-color: #f48fb1;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    button:hover {
-      background-color: #ec407a;
-      transform: scale(1.05);
+      margin: auto;
+      z-index: 1;
     }
   </style>
 </head>
 <body>
-  <h1>📆 יומן תורים</h1>
-
-  <ul>
-    <li><a href="/"><button>דף הבית</button></a></li>
-    <li><a href="/add-client"><button>➕ הוספת לקוחה</button></a></li>
-    <li><a href="/add-appointment"><button>📅 קביעת תור</button></a></li>
-    <li><a href="/clients"><button>📋 רשימת לקוחות</button></a></li>
-  </ul>
-
+  <h1>יומן תורים</h1>
   <div id='calendar'></div>
 
   <script>

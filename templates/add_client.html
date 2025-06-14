@@ -3,21 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <title>הוספת לקוחה חדשה</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Assistant', sans-serif;
+      background: url("/static/images/nude-colors-nail-polish-spilled-over-white-backgro-2025-02-24-17-59-44-utc.jpg") center center no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(255, 255, 255, 0.75);
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 500px;
+      margin: 80px auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #880e4f;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background-color: #f48fb1;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #ec407a;
+    }
+  </style>
 </head>
 <body>
-  <h1>הוספת לקוחה חדשה</h1>
-  <form method="POST">
-    <label for="name">שם מלא:</label>
-    <input type="text" id="name" name="name" required>
+  <div class="container">
+    <h1>➕ הוספת לקוחה חדשה</h1>
+    <form method="POST">
+      <label for="name">שם מלא:</label>
+      <input type="text" id="name" name="name" required>
 
-    <label for="phone">טלפון:</label>
-    <input type="text" id="phone" name="phone" required>
+      <label for="phone">טלפון:</label>
+      <input type="text" id="phone" name="phone" required>
 
-    <label for="treatment">סוג טיפול:</label>
-    <input type="text" id="treatment" name="treatment" required>
+      <label for="treatment">סוג טיפול:</label>
+      <input type="text" id="treatment" name="treatment" required>
 
-    <button type="submit">💾 שמירה</button>
-  </form>
+      <button type="submit">הוספה למערכת</button>
+    </form>
+  </div>
 </body>
 </html>
