@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>לוח תורים</title>
+  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css' rel='stylesheet' />
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      direction: rtl;
+      padding: 20px;
+    }
+    #calendar {
+      max-width: 1000px;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>יומן תורים</h1>
+  <ul>
+    <li><a href="/"><button>דף הבית</button></a></li>
+    <li><a href="/add-client"><button>➕ הוספת לקוחה</button></a></li>
+    <li><a href="/add-appointment"><button>📅 קביעת תור</button></a></li>
+    <li><a href="/clients"><button>📋 רשימת לקוחות</button></a></li>
+    <li><a href="/calendar"><button>📆 צפייה ביומן</button></a></li>
+  </ul>
+
+  <div id='calendar'></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var calendarEl = document.getElementById('calendar');
+
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'he',
+        headerToolbar: {
+          start: 'prev,next today',
+          center: 'title',
+          end: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        events: '/appointments-json'
+      });
+
+      calendar.render();
+    });
+  </script>
+</body>
+</html>
