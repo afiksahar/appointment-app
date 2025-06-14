@@ -6,6 +6,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///clients.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+# מודלים
 class Client(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -18,8 +19,9 @@ class Appointment(db.Model):
     time = db.Column(db.String(20), nullable=False)
     treatment_type = db.Column(db.String(100), nullable=False)
 
-    client = db.relationship('Client', backref=db.backref('appointments', cascade="all, delete", lazy=True))
+    client = db.relationship('Client', backref=db.backref('appointments', lazy=True))
 
+# דפי רנדור
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -40,7 +42,7 @@ def view_clients():
     clients = Client.query.all()
     return render_template('clients.html', clients=clients)
 
-@app.route('/delete-client/<int:client_id>', methods=['POST'])
+@app.route('/delete-client/<int:client_id>')
 def delete_client(client_id):
     client = Client.query.get_or_404(client_id)
     db.session.delete(client)
@@ -59,14 +61,24 @@ def add_appointment():
         db.session.add(appointment)
         db.session.commit()
 
-        # שליחת וואטסאפ מיידית
+        # שליחת וואטסאפ
         client = Client.query.get(client_id)
-        name = client.name
-        phone = client.phone
-        message = f"היי {name}, תורך נקבע ל-{date} בשעה {time} לטיפול {treatment_type}."
-        return redirect(f"https://wa.me/972{phone}?text={message}")
+        message = f"היי {client.name}, תורך לטיפול מסוג {treatment_type} נקבע ל-{date} בשעה {time} 💅"
+        return redirect(f"https://wa.me/972{client.phone}?text={message}")
 
     return render_template('add_appointment.html', clients=clients)
+
+@app.route('/delete-appointment/<int:appointment_id>')
+def delete_appointment(appointment_id):
+    appointment = Appointment.query.get_or_404(appointment_id)
+    db.session.delete(appointment)
+    db.session.commit()
+    return redirect('/appointments')
+
+@app.route('/appointments')
+def view_appointments():
+    appointments = Appointment.query.all()
+    return render_template('appointments.html', appointments=appointments)
 
 @app.route('/calendar')
 def calendar_view():
@@ -84,6 +96,7 @@ def appointments_json():
         })
     return jsonify(data)
 
+# יצירת בסיס הנתונים אם לא קיים
 with app.app_context():
     db.create_all()
 

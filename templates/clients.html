@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>רשימת לקוחות</title>
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
@@ -34,23 +34,23 @@
     h1 {
       text-align: center;
       color: #880e4f;
-      margin-top: 30px;
     }
 
     table {
-      width: 90%;
+      width: 100%;
+      max-width: 800px;
       margin: 30px auto;
       border-collapse: collapse;
-      background: white;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      border-radius: 10px;
+      background-color: white;
+      border-radius: 15px;
       overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     th, td {
       padding: 15px;
+      border-bottom: 1px solid #ddd;
       text-align: center;
-      border-bottom: 1px solid #eee;
     }
 
     th {
@@ -58,21 +58,41 @@
       color: #4a0033;
     }
 
-    tr:hover {
-      background-color: #fce4ec;
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .btns {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btns a {
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      color: white;
     }
 
     .delete-btn {
-      background-color: #ef5350;
-      color: white;
-      padding: 6px 12px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
+      background-color: #e57373;
     }
 
-    .delete-btn:hover {
-      background-color: #d32f2f;
+    .whatsapp-btn {
+      background-color: #4caf50;
+    }
+
+    @media (max-width: 600px) {
+      table, th, td {
+        font-size: 14px;
+      }
+
+      .btns {
+        flex-direction: column;
+        gap: 6px;
+      }
     }
   </style>
 </head>
@@ -87,22 +107,27 @@
   <h1>📋 רשימת לקוחות</h1>
 
   <table>
-    <tr>
-      <th>שם</th>
-      <th>טלפון</th>
-      <th>מחיקה</th>
-    </tr>
-    {% for client in clients %}
-    <tr>
-      <td>{{ client.name }}</td>
-      <td>{{ client.phone }}</td>
-      <td>
-        <form action="/delete-client/{{ client.id }}" method="POST" onsubmit="return confirm('למחוק את {{ client.name }}?');">
-          <button class="delete-btn" type="submit">🗑️ מחק</button>
-        </form>
-      </td>
-    </tr>
-    {% endfor %}
+    <thead>
+      <tr>
+        <th>שם</th>
+        <th>טלפון</th>
+        <th>פעולות</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for client in clients %}
+      <tr>
+        <td>{{ client.name }}</td>
+        <td>{{ client.phone }}</td>
+        <td>
+          <div class="btns">
+            <a class="whatsapp-btn" href="/send-whatsapp/{{ client.id }}" target="_blank">שלח הודעה</a>
+            <a class="delete-btn" href="/delete-client/{{ client.id }}" onclick="return confirm('האם אתה בטוח שברצונך למחוק את הלקוחה?');">מחק</a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
   </table>
 </body>
 </html>
